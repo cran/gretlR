@@ -12,27 +12,57 @@
 
 <meta name="author" content="Sagiru Mati" />
 
-<meta name="date" content="2020-06-09" />
+<meta name="date" content="2022-04-19" />
 
-<title>Knit-Engine for gretl</title>
+<title>A Seamless Integration of Gretl and R</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 
-<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -52,7 +82,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -106,6 +136,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
+
 
 
 
@@ -301,24 +332,25 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<h1 class="title toc-ignore">Knit-Engine for gretl</h1>
+<h1 class="title toc-ignore">A Seamless Integration of Gretl and R</h1>
 <h4 class="author">Sagiru Mati</h4>
-<h4 class="date">2020-06-09</h4>
+<h4 class="date">2022-04-19</h4>
 
 
 
 <div id="about-gretlr" class="section level1">
 <h1>About gretlR</h1>
-<p>gretlR is an R package that can run <code>gretl</code> program from R Markdown.</p>
+<p>gretlR is an R package that can run <code>gretl</code> program from R
+Markdown.</p>
 </div>
 <div id="installation" class="section level1">
 <h1>Installation</h1>
 <p>gretlR can be installed using the following commands in R.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;gretlR&quot;</span>)</span>
-<span id="cb1-2"><a href="#cb1-2"></a></span>
-<span id="cb1-3"><a href="#cb1-3"></a>          OR</span>
-<span id="cb1-4"><a href="#cb1-4"></a>          </span>
-<span id="cb1-5"><a href="#cb1-5"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&#39;sagirumati/gretlR&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;gretlR&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>          OR</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&#39;sagirumati/gretlR&#39;</span>)</span></code></pre></div>
 </div>
 <div id="usage" class="section level1">
 <h1>Usage</h1>
@@ -327,7 +359,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 library(gretlR)
 ```</code></pre>
 <p>Then create a chunk for <code>gretl</code> as shown below:</p>
-<pre><code>```{gretl gretlR1,eval=T,echo=T,comment=NULL,results=&#39;hide&#39;} 
+<pre><code>```{gretl gretlR,eval=T,echo=T,comment=NULL} 
 nulldata 500
 set seed 13
 gretl1 = normal()
@@ -337,33 +369,114 @@ gnuplot gretl1 --time-series --with-lines --output=&quot;line.png&quot;
 gnuplot gretl2 gretl1 --output=&quot;scatter.png&quot;
 ols gretl1 const gretl2
 modeltab add
-tabprint --output=&quot;ols.Rmd&quot;
-eqnprint --output=&quot;olsmodel.Rmd&quot;
-tabprint --output=&quot;ols.csv&quot;
+tabprint --output=&quot;olsTAble.Rmd&quot;
+tabprint --output=&quot;olsTable.tex&quot;
+tabprint --output=&quot;olsTAble.csv&quot;
+eqnprint --output=&quot;olsEquation.tex&quot;
 ```  </code></pre>
-<p>The above chunk creates an gretl program with the chunk’s content, then automatically gretl, which will save gretl outputs in the current directory.</p>
-<p>We can <em>dynamically and reproducibly</em> fetch the <code>gretl</code> graph object we created with the <code>gretl</code> chunk using the following R chunk:</p>
+<p>The above chunk creates a gretl program with the chunk’s content,
+then automatically run the gretl script, which will save gretl outputs
+in the new folder <code>gretlR</code> created in the current working
+directory.</p>
+</div>
+<div id="include_graph-function" class="section level1">
+<h1>include_graph function</h1>
+<p>We can <em>dynamically and reproducibly</em> fetch the
+<code>gretl</code> graph object we created with the <code>gretl</code>
+chunk using the following R chunk:</p>
 <p>For the scatter graph:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">library</span>(knitr)</span>
-<span id="cb4-2"><a href="#cb4-2"></a>knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="st">&quot;scatter.png&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">include_graph</span>(<span class="at">chunk =</span> <span class="st">&quot;gretlR&quot;</span>,<span class="at">graph =</span> <span class="st">&quot;scatter.png&quot;</span>)</span></code></pre></div>
 <p><br><br><br><br></p>
 <p>or the line graph:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="st">&quot;line.png&quot;</span>)</span></code></pre></div>
-<p>we can also include the equation of the OLS generated by the <code>gretl</code> chunk using the following R chunk;</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">include_graph</span>(<span class="at">chunk =</span> <span class="st">&quot;gretlR&quot;</span>,<span class="at">graph =</span> <span class="st">&quot;line.png&quot;</span>)</span></code></pre></div>
+</div>
+<div id="include_tex-function" class="section level1">
+<h1>include_tex function</h1>
+<p>we can also include the equation of the OLS generated by the
+<code>gretl</code> chunk and save as <code>olsEquation.tex</code>.</p>
+<p>If the output is <code>pdf</code>, one can use the raw
+<code>LaTeX</code> codes as follows:</p>
+<p><code>\input{gretlr/gretlR/olsEquation.tex}</code> </p>
+<p>Or use <code>include_tex</code> function to include the equation as
+shown below:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">include_tex</span>(<span class="at">chunk =</span> <span class="st">&quot;gretlR&quot;</span>,<span class="at">tex =</span> <span class="st">&quot;olsEquation&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">include_tex</span>(<span class="at">chunk =</span> <span class="st">&quot;gretlR&quot;</span>,<span class="at">tex =</span> <span class="st">&quot;olsTAble&quot;</span>,<span class="at">start =</span> <span class="dv">7</span>,<span class="at">end =</span> <span class="dv">24</span>)</span></code></pre></div>
 <p><br><br><br><br></p>
-<p>Remember the OLS equation output is saved by the <code>gretl</code> chunk as <code>olsmodel.Rmd</code>. The entire OLS equation model:</p>
-<pre><code>```{r child, child=&#39;olsmodel.Rmd&#39;} 
+<p>The OLS table output is saved by the <code>gretl</code> chunk as
+<code>olsTable.Rmd</code>. The entire OLS table output can included as
+child document as follows:</p>
+<pre><code>```{r child, child=&#39;gretlr/gretlR/olsTable.Rmd&#39;} 
 
 ```</code></pre>
+</div>
+<div id="import_kable-function" class="section level1">
+<h1>import_kable function</h1>
+<p>The <code>gretl</code> chunk also saves the OSL table as
+<code>olsTable.csv</code>. The <code>import_kable</code> function can be
+used to import it as a table. further customisation can be done with
+<code>kableExtra</code> package.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">import_kable</span>(<span class="at">chunk =</span> <span class="st">&quot;gretlR&quot;</span>,<span class="at">file =</span> <span class="st">&quot;olsTAble.csv&quot;</span>,<span class="at">caption=</span><span class="st">&quot;Table generated from gretl </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="st">             chunk&quot;</span>, <span class="at">start=</span><span class="dv">3</span>,<span class="at">end=</span><span class="dv">7</span>,<span class="at">digits=</span><span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">&quot;basic&quot;</span>,<span class="st">&quot;hold_position&quot;</span>,<span class="st">&quot;scale_down&quot;</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a> kableExtra<span class="sc">::</span><span class="fu">row_spec</span>(<span class="dv">0</span>,<span class="at">bold=</span>T)</span></code></pre></div>
+</div>
+<div id="write_inp-function" class="section level1">
+<h1>write_inp function</h1>
+<p>This function writes <code>gretl</code> file.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>code<span class="ot">=</span>r<span class="st">&#39;(nulldata 500</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">set seed 13</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="st">gretl1 = normal()</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="st">gretl2 = normal()</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="st">setobs 12 1980:01 --time-series</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="st">gnuplot gretl1 --time-series --with-lines --output=&quot;line.png&quot;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="st">gnuplot gretl2 gretl1 --output=&quot;scatter.png&quot;</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="st">)&#39;</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">write_inp</span>(code,<span class="at">path=</span><span class="st">&quot;gretlCodes&quot;</span>)</span></code></pre></div>
+</div>
+<div id="exec_inp-function" class="section level1">
+<h1>exec_inp function</h1>
+<p>This function executes existing <code>gretl</code> files.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>code<span class="ot">=</span>r<span class="st">&#39;(nulldata 500</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="st">set seed 13</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="st">gretl1 = normal()</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="st">gretl2 = normal()</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="st">setobs 12 1980:01 --time-series</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="st">gnuplot gretl1 --time-series --with-lines --output=&quot;line.png&quot;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="st">gnuplot gretl2 gretl1 --output=&quot;scatter.png&quot;</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="st"> )&#39;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">write_inp</span>(code,<span class="at">path=</span><span class="st">&quot;SomeFolder/gretlCodes&quot;</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">exec_inp</span>(<span class="st">&quot;someFolder/gretlCodes&quot;</span>)</span></code></pre></div>
+</div>
+<div id="exec_gretl-function" class="section level1">
+<h1>exec_gretl function</h1>
+<p>This function creates <code>gretl</code>file from R object or a set
+of character strings and executes it. It is a combination of
+<code>write_inp</code> and <code>exec_inp</code> functions.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>code<span class="ot">=</span>r<span class="st">&#39;(nulldata 500</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="st">set seed 13</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="st">gretl1 = normal()</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="st">gretl2 = normal()</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="st">setobs 12 1980:01 --time-series</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="st">gnuplot gretl1 --time-series --with-lines --output=&quot;line.png&quot;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="st">gnuplot gretl2 gretl1 --output=&quot;scatter.png&quot;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="st"> )&#39;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">exec_gretl</span>(code)</span></code></pre></div>
+</div>
+<div id="demo" class="section level1">
+<h1>Demo</h1>
+<p>Demo can be accessed via <code>demo(package=&quot;gretlR&quot;)</code>.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">demo</span>(exec_inp) </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">demo</span>(write_inp)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">demo</span>(exec_gretl)</span></code></pre></div>
+</div>
+<div id="r-markdown-template" class="section level1">
+<h1>R Markdown template</h1>
+<p>The R Markdown template for the <code>gretlR</code> can be accessed
+via
+<code>file -&gt; New File -&gt; R Markdown -&gt; From Template -&gt; gretlR</code></p>
 <p><br><br><br><br></p>
-<p>Remember the OLS table output is saved by <code>gretl</code> chunk as <code>ols.Rmd</code>. The entire OLS table output:</p>
-<pre><code>```{r child1,child=&quot;ols.Rmd&quot;} 
-
-```</code></pre>
-<p><br><br><br><br></p>
-<p>Unfortunately, user of <code>gretl</code> has little or no control over the outputs customisation before exporting.</p>
-<p><br><br><br><br></p>
-<p>Please visit my <a href="https://github.com/sagirumati/gretlR/tree/master/inst/examples/">Github</a> for a better explanation and example files.</p>
+<p>Please download a set of example files from <a href="https://github.com/sagirumati/gretlR/tree/master/inst/examples/">Github</a>.</p>
 </div>
 
 
