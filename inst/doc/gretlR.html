@@ -12,7 +12,7 @@
 
 <meta name="author" content="Sagiru Mati" />
 
-<meta name="date" content="2022-04-20" />
+<meta name="date" content="2022-04-28" />
 
 <title>A Seamless Integration of Gretl and R</title>
 
@@ -334,7 +334,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">A Seamless Integration of Gretl and R</h1>
 <h4 class="author">Sagiru Mati</h4>
-<h4 class="date">2022-04-20</h4>
+<h4 class="date">2022-04-28</h4>
 
 
 
@@ -369,9 +369,9 @@ gnuplot gretl1 --time-series --with-lines --output=&quot;line.png&quot;
 gnuplot gretl2 gretl1 --output=&quot;scatter.png&quot;
 ols gretl1 const gretl2
 modeltab add
-tabprint --output=&quot;olsTAble.Rmd&quot;
+tabprint --output=&quot;olsTable.Rmd&quot;
 tabprint --output=&quot;olsTable.tex&quot;
-tabprint --output=&quot;olsTAble.csv&quot;
+tabprint --output=&quot;olsTable.csv&quot;
 eqnprint --output=&quot;olsEquation.tex&quot;
 ```  </code></pre>
 <p>The above chunk creates a gretl program with the chunk’s content,
@@ -396,16 +396,16 @@ chunk using the following R chunk:</p>
 <code>gretl</code> chunk and save as <code>olsEquation.tex</code>.</p>
 <p>If the output is <code>pdf</code>, one can use the raw
 <code>LaTeX</code> codes as follows:</p>
-<p><code>\input{gretlr/gretlR/olsEquation.tex}</code> </p>
+<p><code>\input{gretlR/gretlR/olsEquation.tex}</code> </p>
 <p>Or use <code>include_tex</code> function to include the equation as
 shown below:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">include_tex</span>(<span class="at">chunk =</span> <span class="st">&quot;gretlR&quot;</span>,<span class="at">tex =</span> <span class="st">&quot;olsEquation&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">include_tex</span>(<span class="at">chunk =</span> <span class="st">&quot;gretlR&quot;</span>,<span class="at">tex =</span> <span class="st">&quot;olsTAble&quot;</span>,<span class="at">start =</span> <span class="dv">7</span>,<span class="at">end =</span> <span class="dv">24</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">include_tex</span>(<span class="at">chunk =</span> <span class="st">&quot;gretlR&quot;</span>,<span class="at">tex =</span> <span class="st">&quot;olsTable&quot;</span>,<span class="at">start =</span> <span class="dv">7</span>,<span class="at">end =</span> <span class="dv">24</span>)</span></code></pre></div>
 <p><br><br><br><br></p>
 <p>The OLS table output is saved by the <code>gretl</code> chunk as
 <code>olsTable.Rmd</code>. The entire OLS table output can included as
 child document as follows:</p>
-<pre><code>```{r child, child=&#39;gretlr/gretlR/olsTable.Rmd&#39;} 
+<pre><code>```{r child, child=&#39;gretlR/gretlR/olsTable.Rmd&#39;} 
 
 ```</code></pre>
 </div>
@@ -415,9 +415,9 @@ child document as follows:</p>
 <code>olsTable.csv</code>. The <code>import_kable</code> function can be
 used to import it as a table. further customisation can be done with
 <code>kableExtra</code> package.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">import_kable</span>(<span class="at">chunk =</span> <span class="st">&quot;gretlR&quot;</span>,<span class="at">file =</span> <span class="st">&quot;olsTAble.csv&quot;</span>,<span class="at">caption=</span><span class="st">&quot;Table generated from gretl </span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="st">             chunk&quot;</span>, <span class="at">start=</span><span class="dv">3</span>,<span class="at">end=</span><span class="dv">7</span>,<span class="at">digits=</span><span class="dv">2</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">&quot;basic&quot;</span>,<span class="st">&quot;hold_position&quot;</span>,<span class="st">&quot;scale_down&quot;</span>)) <span class="sc">|&gt;</span> </span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">import_kable</span>(<span class="at">chunk =</span> <span class="st">&quot;gretlR&quot;</span>,<span class="at">file =</span> <span class="st">&quot;olsTable.csv&quot;</span>,<span class="at">caption=</span><span class="st">&quot;Table generated from gretl </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="st">             chunk&quot;</span>, <span class="at">start=</span><span class="dv">3</span>,<span class="at">end=</span><span class="dv">7</span>,<span class="at">digits=</span><span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">&quot;basic&quot;</span>,<span class="st">&quot;hold_position&quot;</span>,<span class="st">&quot;scale_down&quot;</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a> kableExtra<span class="sc">::</span><span class="fu">row_spec</span>(<span class="dv">0</span>,<span class="at">bold=</span>T)</span></code></pre></div>
 </div>
 <div id="write_inp-function" class="section level1">

@@ -26,13 +26,13 @@ library(gretlR)
 #  
 
 ## ----includeTex1--------------------------------------------------------------
-#  include_tex(chunk = "gretlR",tex = "olsTAble",start = 7,end = 24)
+#  include_tex(chunk = "gretlR",tex = "olsTable",start = 7,end = 24)
 #  
 
 ## ----importKable--------------------------------------------------------------
-#  import_kable(chunk = "gretlR",file = "olsTAble.csv",caption="Table generated from gretl
-#               chunk", start=3,end=7,digits=2) |>
-#  kableExtra::kable_styling(latex_options = c("basic","hold_position","scale_down")) |>
+#  import_kable(chunk = "gretlR",file = "olsTable.csv",caption="Table generated from gretl
+#               chunk", start=3,end=7,digits=2) %>%
+#  kableExtra::kable_styling(latex_options = c("basic","hold_position","scale_down")) %>%
 #   kableExtra::row_spec(0,bold=T)
 #  
 

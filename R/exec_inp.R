@@ -16,7 +16,7 @@
 #' gnuplot gretl2 gretl1 --output="scatter.png"
 #' )'
 #' write_inp(code,path="SomeFolder/gretlCodes")
-#' exec_inp("someFolder/gretlCodes")
+#' exec_inp("SomeFolder/gretlCodes")
 #'
 #'}
 #' @family important functions
@@ -38,8 +38,11 @@ exec_inp <- function(path=".") {
     file=basename(i)
     file=gsub("\\.inp$","",file)
     gretlFile=paste0(fileDir,"/",file,".inp")
+
+    create_dir(fileDir)
     fileDir=normalizePath(fileDir)
-    gretlWorkDir=paste0("set workdir ",shQuote(fileDir))
+
+    gretlWorkDir=paste0("set workdir ",shQuote(fileDir,type="cmd"))
 
     gretlExecFile=basename(tempfile("gretlexec",".",".inp"))
 
